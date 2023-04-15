@@ -4,10 +4,7 @@ import "package:flutter/scheduler.dart";
 import "../colors/app_colors.dart";
 
 class AppTheme {
-  static ThemeMode currentTheme =
-      SchedulerBinding.instance.window.platformBrightness == Brightness.dark
-          ? ThemeMode.dark
-          : ThemeMode.light;
+  static ThemeMode currentTheme = ThemeMode.light;
 
   static final ThemeData lightTheme = ThemeData(
     // scaffoldBackgroundColor: AppColors.backgroundLight,

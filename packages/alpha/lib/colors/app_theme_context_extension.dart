@@ -28,11 +28,7 @@ class AppThemeWrapper {
       AppColor.transparent: AppColors.transparent,
       AppColor.icon: AppColors.iconLight,
       AppColor.primary: AppColors.primary,
-    },
-    ThemeMode.dark: {
-      AppColor.transparent: AppColors.transparent,
-      AppColor.icon: AppColors.iconDark,
-      AppColor.primary: AppColors.primary,
+      AppColor.textChatBox: AppColors.textChatBox,
     },
   };
 }

@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  mic_stream: ^0.6.5
 
   alpha: 0.0.1
   network: 0.0.1

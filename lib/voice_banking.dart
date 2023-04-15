@@ -1,6 +1,7 @@
 import "package:alpha/theme/app_theme.dart";
 import "package:flutter/material.dart";
 import "common/constants.dart";
+import "presentation/voice_chat.dart";
 
 class VoiceBanking extends StatelessWidget {
   const VoiceBanking({super.key});
@@ -11,7 +12,8 @@ class VoiceBanking extends StatelessWidget {
       title: Constants.title,
       themeMode: AppTheme.currentTheme,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      darkTheme: AppTheme.lightTheme,
+      home: VoiceChat(),
     );
   }
 }
