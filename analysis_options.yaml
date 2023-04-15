@@ -1,0 +1,25 @@
+analyzer:
+  errors:
+    missing_required_param: error
+    parameter_assignments: error
+    avoid_print: error
+  exclude:
+    - "bin/cache/**"
+    - "lib/generated_plugin_registrant.dart"
+    - "**.g.dart"
+
+linter:
+  rules:
+    - sort_child_properties_last
+    - require_trailing_commas
+    - prefer_double_quotes
+    - prefer_interpolation_to_compose_strings
+    - prefer_collection_literals
+    - file_names
+    - always_declare_return_types
+    - hash_and_equals
+    - prefer_relative_imports
+    - parameter_assignments
+    - use_build_context_synchronously
+    - avoid_print
+
