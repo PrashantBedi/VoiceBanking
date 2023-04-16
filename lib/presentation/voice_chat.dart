@@ -1,12 +1,37 @@
+import "dart:async";
+import "dart:io";
+import "dart:typed_data";
+
 import "package:alpha/widgets/chat_message.dart";
 import "package:alpha/widgets/rounded_elevated_container.dart";
-import "package:alpha/widgets/icon_button.dart";
+import "package:alpha/widgets/mic_button.dart";
 import "package:flutter/material.dart";
+import "package:flutter_sound/flutter_sound.dart";
+import "package:permission_handler/permission_handler.dart";
 
 import "../common/constants.dart";
 
-class VoiceChat extends StatelessWidget {
+class VoiceChat extends StatefulWidget {
   VoiceChat({Key? key}) : super(key: key);
+
+  @override
+  State<VoiceChat> createState() => _VoiceChatState();
+}
+
+class _VoiceChatState extends State<VoiceChat> {
+  final recorder = FlutterSoundRecorder();
+
+  @override
+  void initState() {
+    initializer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    recorder.closeRecorder();
+    super.dispose();
+  }
 
   final List<ChatMessage> _messages = [
     ChatMessage(
@@ -14,6 +39,24 @@ class VoiceChat extends StatelessWidget {
       isMe: true,
     ),
   ];
+
+  void initializer() async {
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted) {
+      throw "Permission not granted";
+    }
+    await recorder.openRecorder();
+    recorder.setSubscriptionDuration(const Duration(milliseconds: 500));
+  }
+
+  Future startRecord() async {
+    await recorder.startRecorder(toFile: "audio");
+  }
+
+  Future stopRecorder() async {
+    final filePath = await recorder.stopRecorder();
+    final file = File(filePath!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +87,9 @@ class VoiceChat extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Hindi"),
-                    VBIconButton(
-                      onPress: () {},
-                      icon: Icon(Icons.mic),
+                    VBMicButton(
+                      onRecord: startRecord,
+                      onStop: stopRecorder,
                     )
                   ],
                 ),

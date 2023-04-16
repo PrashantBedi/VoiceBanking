@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mic_stream: ^0.6.5
+  flutter_sound: ^9.2.13
+  permission_handler: ^9.2.0
 
   alpha: 0.0.1
   network: 0.0.1

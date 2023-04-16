@@ -9,7 +9,7 @@ class AppColors {
   static const Color textChatBox = Color.fromARGB(255, 128, 216, 255);
 
   // Light
-  static const Color iconLight = Colors.black;
+  static const Color iconLight = Colors.white;
   static const Color borderLight = Colors.black26;
 
   // Dark
