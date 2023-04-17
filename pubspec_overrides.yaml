@@ -1,7 +1,9 @@
-# melos_managed_dependency_overrides: alpha,network,storage
+# melos_managed_dependency_overrides: alpha,storage,backend_integration,network
 dependency_overrides:
   alpha:
     path: packages/alpha
+  backend_integration:
+    path: packages/backend_integration
   network:
     path: packages/network
   storage:

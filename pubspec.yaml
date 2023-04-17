@@ -12,8 +12,11 @@ dependencies:
     sdk: flutter
   flutter_sound: ^9.2.13
   permission_handler: ^9.2.0
+  assets_audio_player: ^3.0.6
+  flutter_bloc: ^8.1.1
 
   alpha: 0.0.1
+  backend_integration: 0.0.1
   network: 0.0.1
   storage: 0.0.1
 

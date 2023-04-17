@@ -28,3 +28,4 @@ scripts:
       ignore:
         - "storage"
         - "alpha"
+        - "network"

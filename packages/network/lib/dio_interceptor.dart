@@ -3,10 +3,9 @@ import "package:dio/dio.dart";
 class DioInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // options.headers = {
-    //   "Content-Type": "application/json",
-    //   "Custom-Key": "Custom",
-    // };
+    options.headers = {
+      "Content-Type": "application/json",
+    };
     super.onRequest(options, handler);
   }
 
