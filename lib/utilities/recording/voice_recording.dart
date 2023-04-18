@@ -1,6 +1,7 @@
 import "dart:io";
 
 import "package:flutter_sound/flutter_sound.dart";
+import "package:path_provider/path_provider.dart";
 import "package:permission_handler/permission_handler.dart";
 
 class VoiceRecording {
@@ -18,7 +19,7 @@ class VoiceRecording {
   }
 
   Future startRecord() async {
-    await recorder.startRecorder(toFile: "audio");
+    await recorder.startRecorder(toFile: "output");
   }
 
    Future<File> stopRecorder() async {

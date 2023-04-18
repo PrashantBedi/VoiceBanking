@@ -6,6 +6,7 @@ class PlayAudio{
       Audio.file(filePath),
       autoStart: true,
       showNotification: false,
+
     );
   }
 }

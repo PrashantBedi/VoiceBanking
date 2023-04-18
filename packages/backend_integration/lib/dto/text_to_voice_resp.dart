@@ -12,13 +12,12 @@ class TextToVoiceResp {
   late String status;
 
   @JsonKey(name: "audio", fromJson: _fromJson)
-  late String audio;
+  late Uint8List audio;
 
   TextToVoiceResp({required this.status, required this.audio});
 
-  static String _fromJson(String d) {
-    Codec<String, String> stringToBase64 = utf8.fuse<String>(base64);
-    return stringToBase64.decode(d);
+  static Uint8List _fromJson(String jsonValue) {
+    return base64Decode(jsonValue);
   }
 
   factory TextToVoiceResp.fromJson(Map<String, dynamic> json) =>

@@ -1,24 +1,31 @@
 import "package:alpha/widgets/chat_message.dart";
 import "package:alpha/widgets/rounded_elevated_container.dart";
 import "package:alpha/widgets/mic_button.dart";
-import "package:backend_integration/endpoint/text_to_voice.dart";
+import "package:auto_route/auto_route.dart";
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_sound/flutter_sound.dart";
-import "package:network/client.dart";
 import "package:logger/logger.dart" show Level;
 
 import "../common/constants.dart";
 import "../cubit/voice_chat_cubit.dart";
-import "../repository/voice_process_repo.dart";
-import "../usercase/voice_process_usecase.dart";
-import "../utilities/play_audio/play_audio.dart";
+import "../navigation/routes.dart";
+import "../utilities/factory/factory.dart";
 import "../utilities/recording/voice_recording.dart";
 
-class VoiceChat extends StatefulWidget {
+class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
   VoiceChat({Key? key}) : super(key: key);
 
   @override
   State<VoiceChat> createState() => _VoiceChatState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => voiceChatCubit(),
+      child: VoiceChat(),
+    );
+  }
 }
 
 class _VoiceChatState extends State<VoiceChat> {
@@ -29,6 +36,7 @@ class _VoiceChatState extends State<VoiceChat> {
   void initState() {
     vc = VoiceRecording(recorder);
     vc.initializer();
+    playAudio(_messages.first.text);
     super.initState();
   }
 
@@ -36,6 +44,10 @@ class _VoiceChatState extends State<VoiceChat> {
   void dispose() {
     recorder.closeRecorder();
     super.dispose();
+  }
+
+  void playAudio(String text) {
+    context.read<VoiceChatCubit>().textToAudio(text);
   }
 
   final List<ChatMessage> _messages = [
@@ -50,18 +62,15 @@ class _VoiceChatState extends State<VoiceChat> {
   }
 
   void onStop() async {
+    var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    var vpr = VoiceProcessRepository(TextToVoiceAPI(DioClient().dio));
-    var vpu = VoiceProcessUserCase(vpr);
-    var vCubit = VoiceChatCubit(vpu);
-    var audioToText = vCubit.audioToText();
+    var audioToText = vcc.audioToText();
     _messages.add(ChatMessage(text: audioToText, isMe: false));
-    var result = vCubit.performAction();
+    playAudio(audioToText);
+    var result = vcc.performAction();
     _messages.add(ChatMessage(text: result, isMe: true));
-    var textToAudio = vCubit.textToAudio(result);
-    PlayAudio().playAudio(file.path);
-    setState(() {
-    });
+    var textToAudio = vcc.textToAudio(result);
+    setState(() {});
   }
 
   @override
@@ -92,7 +101,21 @@ class _VoiceChatState extends State<VoiceChat> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("English"),
+                    InkWell(
+                      onTap: () =>
+                          AutoRouter.of(context).push(LanguageChangeRoute()),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.menu),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text("English"),
+                          ),
+                        ],
+                      ),
+                    ),
                     VBMicButton(
                       onRecord: onStart,
                       onStop: onStop,
