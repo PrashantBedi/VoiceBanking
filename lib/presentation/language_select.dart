@@ -2,15 +2,25 @@ import "package:alpha/model/language.dart";
 import "package:alpha/widgets/language_list.dart";
 import "package:auto_route/auto_route.dart";
 import "package:flutter/material.dart";
-import "package:provider/provider.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 
+import "../cubit/language_change_cubit.dart";
 import "../navigation/routes.dart";
+import "../utilities/factory/factory.dart";
 
-class LanguageChange extends StatefulWidget {
+class LanguageChange extends StatefulWidget implements AutoRouteWrapper {
   const LanguageChange({Key? key}) : super(key: key);
 
   @override
   _LanguageChangeState createState() => _LanguageChangeState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => languageChangeCubit,
+      child: LanguageChange(),
+    );
+  }
 }
 
 class _LanguageChangeState extends State<LanguageChange> {
@@ -22,8 +32,8 @@ class _LanguageChangeState extends State<LanguageChange> {
       appBar: AppBar(
         title: Text(
           "Select Language",
-          ),
         ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +48,8 @@ class _LanguageChangeState extends State<LanguageChange> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: VBLanguageList(
-                changeLanguage: (_) {
+                changeLanguage: (language) {
+                  context.read<LanguageChangeCubit>().changeLanguage(language);
                   AutoRouter.of(context).popUntilRoot();
                   AutoRouter.of(context).push(VoiceChatRoute());
                 },

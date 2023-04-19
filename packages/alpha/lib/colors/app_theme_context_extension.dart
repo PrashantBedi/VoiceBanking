@@ -31,6 +31,11 @@ class AppThemeWrapper {
       AppColor.textChatBox: AppColors.textChatBox,
       AppColor.border: AppColors.borderLight,
       AppColor.widgetBg: AppColors.widgetBgLight,
+      AppColor.titleText: AppColors.titleTextLight,
+      AppColor.headlineText: AppColors.headlineTextLight,
+      AppColor.labelText: AppColors.labelTextLight,
+      AppColor.backgroundLight: AppColors.backgroundLight,
+      AppColor.white: AppColors.white,
     },
   };
 }

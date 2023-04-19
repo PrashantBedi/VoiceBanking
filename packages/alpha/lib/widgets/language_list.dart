@@ -18,7 +18,7 @@ class _VBLanguageListState extends State<VBLanguageList> {
 
   @override
   void initState() {
-    _selectedIndex = getCurrentLangIndex();
+    _selectedIndex = 0;
     super.initState();
   }
 
@@ -28,11 +28,11 @@ class _VBLanguageListState extends State<VBLanguageList> {
       itemCount: Language.languageList().length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Text(languageList.elementAt(index).flag),
+          leading: Text(languageList.elementAt(index).languageCode),
           title: Text(
             languageList.elementAt(index).name,
           ),
-          trailing: index == _selectedIndex ? Icon(Icons.check) : null,
+          trailing: index == _selectedIndex ? const Icon(Icons.check) : null,
           selected: index == _selectedIndex,
           selectedTileColor:
               context.getColor(AppColor.textChatBox).withOpacity(0.1),
@@ -49,9 +49,9 @@ class _VBLanguageListState extends State<VBLanguageList> {
     widget.changeLanguage(Language.languageList().elementAt(index));
   }
 
-  int getCurrentLangIndex() {
-    String systemLanguageCode = Language.currentLocale.languageCode;
-    return Language.languageList()
-        .indexWhere((element) => element.languageCode == systemLanguageCode);
-  }
+  // int getCurrentLangIndex() async {
+  //   Language l = widget.getLanguage();
+  //   return Language.languageList()
+  //       .indexWhere((element) => element.languageCode == l.languageCode);
+  // }
 }

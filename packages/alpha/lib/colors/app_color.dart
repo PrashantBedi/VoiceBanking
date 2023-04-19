@@ -5,4 +5,9 @@ enum AppColor {
   textChatBox,
   border,
   widgetBg,
+  titleText,
+  headlineText,
+  labelText,
+  backgroundLight,
+  white,
 }

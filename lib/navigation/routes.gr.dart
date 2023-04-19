@@ -28,7 +28,7 @@ class _$Routes extends RootStackRouter {
     LanguageChangeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const LanguageChange(),
+        child: WrappedRoute(child: const LanguageChange()),
       );
     },
     LoginRoute.name: (routeData) {

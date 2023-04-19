@@ -20,15 +20,24 @@ class ChatMessage extends StatelessWidget {
               crossAxisAlignment:
                   isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  decoration: BoxDecoration(
-                    color: context.getColor(AppColor.textChatBox),
-                    borderRadius: isMe ? forMe : forUser,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(text),
+                ConstrainedBox(
+                  constraints: BoxConstraints.loose(
+                      Size.fromWidth(MediaQuery.of(context).size.width * 0.7)),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 5.0),
+                    decoration: BoxDecoration(
+                      color: context.getColor(AppColor.textChatBox),
+                      borderRadius: isMe ? forMe : forUser,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        text,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: context.getColor(AppColor.headlineText),
+                            ),
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -8,6 +8,7 @@ import "package:flutter_sound/flutter_sound.dart";
 import "package:logger/logger.dart" show Level;
 
 import "../common/constants.dart";
+import "../cubit/language_change_cubit.dart";
 import "../cubit/voice_chat_cubit.dart";
 import "../navigation/routes.dart";
 import "../utilities/factory/factory.dart";
@@ -21,8 +22,15 @@ class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => voiceChatCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => voiceChatCubit,
+        ),
+        BlocProvider(
+          create: (context) => languageChangeCubit,
+        )
+      ],
       child: VoiceChat(),
     );
   }
@@ -31,12 +39,15 @@ class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
 class _VoiceChatState extends State<VoiceChat> {
   final recorder = FlutterSoundRecorder(logLevel: Level.error);
   late VoiceRecording vc;
+  String selectedLang = "english";
+  final scrollController = ScrollController();
 
   @override
   void initState() {
     vc = VoiceRecording(recorder);
     vc.initializer();
     playAudio(_messages.first.text);
+    context.read<LanguageChangeCubit>().getLanguage();
     super.initState();
   }
 
@@ -64,11 +75,11 @@ class _VoiceChatState extends State<VoiceChat> {
   void onStop() async {
     var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    var audioToText = vcc.audioToText(file);
-    _messages.add(ChatMessage(text: audioToText, isMe: false));
+    var audioToText = vcc.audioToText(file, selectedLang);
+    _messages.insert(0, ChatMessage(text: audioToText, isMe: false));
     var result = vcc.performAction();
-    _messages.add(ChatMessage(text: result, isMe: true));
-    var textToAudio = vcc.textToAudio(result);
+    _messages.insert(0, ChatMessage(text: result, isMe: true));
+    vcc.textToAudio(result);
     setState(() {});
   }
 
@@ -85,6 +96,7 @@ class _VoiceChatState extends State<VoiceChat> {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(8.0),
+              reverse: true,
               itemCount: _messages.length,
               itemBuilder: (BuildContext context, int index) {
                 return _messages[index];
@@ -110,7 +122,17 @@ class _VoiceChatState extends State<VoiceChat> {
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text("English"),
+                            child: BlocBuilder<LanguageChangeCubit,
+                                LanguageChangeState>(
+                              builder: (context, state) {
+                                if (state is LanguageChangeLoaded) {
+                                  selectedLang =
+                                      state.language.name.toLowerCase();
+                                  return Text(state.language.name);
+                                }
+                                return CircularProgressIndicator();
+                              },
+                            ),
                           ),
                         ],
                       ),

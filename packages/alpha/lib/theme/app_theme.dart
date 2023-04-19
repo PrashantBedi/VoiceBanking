@@ -7,15 +7,20 @@ class AppTheme {
   static ThemeMode currentTheme = ThemeMode.light;
 
   static final ThemeData lightTheme = ThemeData(
-    // scaffoldBackgroundColor: AppColors.backgroundLight,
-    // appBarTheme: const AppBarTheme(
-      // color: AppColors.primary,
-    //   iconTheme: IconThemeData(
-    //     color: AppColors.black,
-    //   ),
-    // ),
+    scaffoldBackgroundColor: AppColors.backgroundLight,
+    appBarTheme: const AppBarTheme(
+      color: AppColors.primary,
+      iconTheme: IconThemeData(
+        color: AppColors.iconLight,
+      ),
+    ),
+    colorScheme: const ColorScheme.light(
+      primary: AppColors.primary,
+      onPrimary: AppColors.white,
+      background: AppColors.backgroundLight,
+    ),
     // colorScheme: const ColorScheme.light(
-    //   primary: AppColors.secondaryLight,
+    //   primary: AppColors.primary,
     //   onPrimary: AppColors.black,
     //   secondary: AppColors.secondaryLight,
     //   onSecondary: AppColors.black,
