@@ -7,21 +7,25 @@ import "package:dio/dio.dart";
 
 import "../../common/constants.dart";
 import "../../cubit/language_change_cubit.dart";
+import "../../cubit/login_cubit.dart";
 import "../../cubit/voice_chat_cubit.dart";
 import "../../repository/language_change_repo.dart";
 import "../../repository/voice_process_repo.dart";
 import "../../usercase/language_change_usecase.dart";
+import "../../usercase/login_usecase.dart";
 import "../../usercase/voice_process_usecase.dart";
 
 // Cubit
 
 VoiceChatCubit get voiceChatCubit => VoiceChatCubit(voiceProcessUserCase);
 LanguageChangeCubit get languageChangeCubit => LanguageChangeCubit(languageChangeUsecase);
+LoginCubit get loginCubit => LoginCubit(loginUseCase);
 
 // UseCase
 
 LanguageChangeUsecase get languageChangeUsecase => LanguageChangeUsecase(languageChangeRepo);
 VoiceProcessUserCase get voiceProcessUserCase => VoiceProcessUserCase(voiceProcessRepository, languageChangeRepo);
+LoginUsecase get loginUseCase => LoginUsecase();
 
 // Repo
 

@@ -60,6 +60,7 @@ class _VBOtpTextFieldWidgetState extends State<VBOtpTextFieldWidget> {
         onChanged: widget.onChange,
         onCompleted: widget.onComplete,
         otpFieldStyle: OtpFieldStyle(
+          errorBorderColor: Colors.red,
           enabledBorderColor: context.getColor(AppColor.border),
           focusBorderColor: context.getColor(AppColor.border),
           backgroundColor: context.getColor(AppColor.widgetBg),

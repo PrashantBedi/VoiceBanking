@@ -17,6 +17,14 @@ class _$Routes extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    LoginRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginRouteArgs>(
+          orElse: () => const LoginRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: Login(key: args.key),
+      );
+    },
     VoiceChatRoute.name: (routeData) {
       final args = routeData.argsAs<VoiceChatRouteArgs>(
           orElse: () => const VoiceChatRouteArgs());
@@ -31,14 +39,6 @@ class _$Routes extends RootStackRouter {
         child: WrappedRoute(child: const LanguageChange()),
       );
     },
-    LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>(
-          orElse: () => const LoginRouteArgs());
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: Login(key: args.key),
-      );
-    },
   };
 
   @override
@@ -46,8 +46,12 @@ class _$Routes extends RootStackRouter {
         RouteConfig(
           '/#redirect',
           path: '/',
-          redirectTo: '/chat',
+          redirectTo: '/login',
           fullMatch: true,
+        ),
+        RouteConfig(
+          LoginRoute.name,
+          path: '/login',
         ),
         RouteConfig(
           VoiceChatRoute.name,
@@ -57,11 +61,31 @@ class _$Routes extends RootStackRouter {
           LanguageChangeRoute.name,
           path: '/lang',
         ),
-        RouteConfig(
+      ];
+}
+
+/// generated route for
+/// [Login]
+class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({Key? key})
+      : super(
           LoginRoute.name,
           path: '/login',
-        ),
-      ];
+          args: LoginRouteArgs(key: key),
+        );
+
+  static const String name = 'LoginRoute';
+}
+
+class LoginRouteArgs {
+  const LoginRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LoginRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -98,28 +122,4 @@ class LanguageChangeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LanguageChangeRoute';
-}
-
-/// generated route for
-/// [Login]
-class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({Key? key})
-      : super(
-          LoginRoute.name,
-          path: '/login',
-          args: LoginRouteArgs(key: key),
-        );
-
-  static const String name = 'LoginRoute';
-}
-
-class LoginRouteArgs {
-  const LoginRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'LoginRouteArgs{key: $key}';
-  }
 }

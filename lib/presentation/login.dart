@@ -4,13 +4,44 @@ import "package:alpha/widgets/otp_text_field_widget.dart";
 import "package:alpha/widgets/primary_text_button.dart";
 import "package:alpha/widgets/text_title.dart";
 import "package:alpha/widgets/text_widget.dart";
+import "package:auto_route/auto_route.dart";
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 import "package:otp_text_field/otp_text_field.dart";
 import "../common/constants.dart";
+import "../cubit/login_cubit.dart";
+import "../navigation/routes.dart";
+import "../utilities/factory/factory.dart";
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget implements AutoRouteWrapper {
   Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => loginCubit,
+      child: Login(),
+    );
+  }
+}
+
+class _LoginState extends State<Login> {
   final OtpFieldController controller = OtpFieldController();
+  bool hasError = false;
+
+  void loginUser(String value) {
+    if (value.length == 6) {
+      context.read<LoginCubit>().loginUser(value).then((value) {
+        hasError = value;
+        if (value) {
+          AutoRouter.of(context).push(LanguageChangeRoute());
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +73,8 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: VBOtpTextFieldWidget(
                           otpController: controller,
-                          hasError: false,
-                          onChange: (value) {},
+                          hasError: hasError,
+                          onChange: loginUser,
                           isSecureInput: true,
                           otpLength: 6,
                         ),

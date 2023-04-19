@@ -10,9 +10,9 @@ part "routes.gr.dart";
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
-    AutoRoute(page: VoiceChat, path: "/chat", initial: true),
+    AutoRoute(page: Login, path: "/login", initial: true),
+    AutoRoute(page: VoiceChat, path: "/chat"),
     AutoRoute(page: LanguageChange, path: "/lang"),
-    AutoRoute(page: Login, path: "/login"),
   ],
 )
 class Routes extends _$Routes {
