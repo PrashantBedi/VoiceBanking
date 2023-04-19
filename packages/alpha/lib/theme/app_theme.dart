@@ -53,7 +53,7 @@ class AppTheme {
         fontWeight: FontWeight.normal,
       ),
       headlineLarge: TextStyle(
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: FontWeight.w700,
         fontFamily: "SF Pro Text",
       ),
