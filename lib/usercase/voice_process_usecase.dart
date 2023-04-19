@@ -11,8 +11,8 @@ class VoiceProcessUserCase{
 
   VoiceProcessUserCase(this.repo);
 
-  String processVoice() {
-    return repo.processVoice();
+  String processVoice(File file) {
+    return repo.processVoice(file);
   }
 
   String performAction() {

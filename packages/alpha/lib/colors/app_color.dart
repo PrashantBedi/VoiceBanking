@@ -4,4 +4,5 @@ enum AppColor {
   primary,
   textChatBox,
   border,
+  widgetBg,
 }

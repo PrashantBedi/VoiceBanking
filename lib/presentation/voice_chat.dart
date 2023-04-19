@@ -64,9 +64,8 @@ class _VoiceChatState extends State<VoiceChat> {
   void onStop() async {
     var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    var audioToText = vcc.audioToText();
+    var audioToText = vcc.audioToText(file);
     _messages.add(ChatMessage(text: audioToText, isMe: false));
-    playAudio(audioToText);
     var result = vcc.performAction();
     _messages.add(ChatMessage(text: result, isMe: true));
     var textToAudio = vcc.textToAudio(result);

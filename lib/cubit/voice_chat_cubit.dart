@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:flutter_bloc/flutter_bloc.dart";
 
 import "../usercase/voice_process_usecase.dart";
@@ -9,8 +11,8 @@ class VoiceChatCubit extends Cubit<VoiceChatState> {
 
   VoiceChatCubit(this.vpu): super(VoiceChatStateInitial());
 
-  String audioToText() {
-    return vpu.processVoice();
+  String audioToText(File file) {
+    return vpu.processVoice(file);
   }
 
   String performAction() {

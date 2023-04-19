@@ -9,5 +9,5 @@ void startup() {
     Duration(seconds: 10),
   );
 
-  runApp(const VoiceBanking());
+  runApp(VoiceBanking());
 }

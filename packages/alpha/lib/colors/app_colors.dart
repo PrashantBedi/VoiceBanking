@@ -11,6 +11,7 @@ class AppColors {
   // Light
   static const Color iconLight = Colors.white;
   static const Color borderLight = Colors.black26;
+  static const Color widgetBgLight = Colors.white70;
 
   // Dark
 }

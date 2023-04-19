@@ -3,6 +3,7 @@ import "dart:io";
 import "package:flutter_sound/flutter_sound.dart";
 import "package:path_provider/path_provider.dart";
 import "package:permission_handler/permission_handler.dart";
+import "package:record_mp3/record_mp3.dart";
 
 class VoiceRecording {
   late FlutterSoundRecorder recorder;
@@ -19,10 +20,10 @@ class VoiceRecording {
   }
 
   Future startRecord() async {
-    await recorder.startRecorder(toFile: "output");
+    await recorder.startRecorder(toFile: "output.aac");
   }
 
-   Future<File> stopRecorder() async {
+  Future<File> stopRecorder() async {
     final filePath = await recorder.stopRecorder();
     return File(filePath!);
   }

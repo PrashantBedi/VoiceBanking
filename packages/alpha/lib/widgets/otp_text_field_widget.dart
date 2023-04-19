@@ -1,6 +1,9 @@
+import "package:alpha/colors/app_theme_context_extension.dart";
 import "package:flutter/material.dart";
 import "package:otp_text_field/otp_text_field.dart";
 import "package:otp_text_field/style.dart";
+
+import "../colors/app_color.dart";
 
 class VBOtpTextFieldWidget extends StatefulWidget {
   final OtpFieldController otpController;
@@ -50,16 +53,16 @@ class _VBOtpTextFieldWidgetState extends State<VBOtpTextFieldWidget> {
         fieldWidth: widget.fieldWidth!,
         fieldStyle: widget.fieldStyle!,
         outlineBorderRadius: widget.outlinedBorderRadius!,
-        // style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-        //       color: context.getColor(AppColor.HEADLINE_TEXT),
-        //       fontSize: 20,
-        //     ),
+        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+              // color: context.getColor(AppColor.HEADLINE_TEXT),
+              fontSize: 20,
+            ),
         onChanged: widget.onChange,
         onCompleted: widget.onComplete,
         otpFieldStyle: OtpFieldStyle(
-          enabledBorderColor: Theme.of(context).colorScheme.outline,
-          focusBorderColor: Theme.of(context).colorScheme.secondary,
-          // backgroundColor: context.getColor(AppColor.TEXT_FIELD_BG),
+          enabledBorderColor: context.getColor(AppColor.border),
+          focusBorderColor: context.getColor(AppColor.border),
+          backgroundColor: context.getColor(AppColor.widgetBg),
         ),
       ),
     );

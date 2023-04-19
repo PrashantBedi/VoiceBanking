@@ -14,9 +14,4 @@ abstract class TextToVoiceAPI {
   Future<TextToVoiceResp> textToVoice(
     @Body() TextToVoiceReq req,
   );
-
-  // @POST("ttsv2/tts")
-  // Future<TextToVoiceResp> uploadAudioFile(
-  //   @Body() MultipartFile req,
-  // );
 }
