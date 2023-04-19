@@ -11,8 +11,8 @@ class VoiceChatCubit extends Cubit<VoiceChatState> {
 
   VoiceChatCubit(this.vpu): super(VoiceChatStateInitial());
 
-  String audioToText(File file, String lang) {
-    return vpu.processVoice(file, lang);
+  Future<String> audioToText(File file, String lang) async {
+    return await vpu.processVoice(file, lang);
   }
 
   String performAction() {

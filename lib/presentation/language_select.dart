@@ -39,6 +39,7 @@ class _LanguageChangeState extends State<LanguageChange> {
         title: Text(
           "Select Language",
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

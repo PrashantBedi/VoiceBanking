@@ -76,7 +76,7 @@ class _VoiceChatState extends State<VoiceChat> {
   void onStop() async {
     var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    var audioToText = vcc.audioToText(file, selectedLang);
+    String audioToText = await vcc.audioToText(file, selectedLang);
     _messages.insert(0, ChatMessage(text: audioToText, isMe: false));
     var result = vcc.performAction();
     _messages.insert(0, ChatMessage(text: result, isMe: true));
@@ -91,6 +91,7 @@ class _VoiceChatState extends State<VoiceChat> {
         title: Text(
           Constants.title,
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [

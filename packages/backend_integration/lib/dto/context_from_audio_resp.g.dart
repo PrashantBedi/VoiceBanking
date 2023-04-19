@@ -8,8 +8,14 @@ part of 'context_from_audio_resp.dart';
 
 ContextFromAudioResp _$ContextFromAudioRespFromJson(
         Map<String, dynamic> json) =>
-    ContextFromAudioResp();
+    ContextFromAudioResp(
+      (json['data'] as List<dynamic>)
+          .map((e) => Map<String, String>.from(e as Map))
+          .toList(),
+    );
 
 Map<String, dynamic> _$ContextFromAudioRespToJson(
         ContextFromAudioResp instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'data': instance.data,
+    };

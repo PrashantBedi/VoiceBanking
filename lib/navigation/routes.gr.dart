@@ -22,7 +22,7 @@ class _$Routes extends RootStackRouter {
           orElse: () => const LoginRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: Login(key: args.key),
+        child: WrappedRoute(child: Login(key: args.key)),
       );
     },
     VoiceChatRoute.name: (routeData) {

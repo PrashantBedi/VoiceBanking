@@ -1,6 +1,7 @@
 import "dart:io";
 import "dart:typed_data";
 
+import "package:backend_integration/dto/context_from_audio_resp.dart";
 import "package:backend_integration/dto/text_to_voice_req.dart";
 import "package:backend_integration/dto/text_to_voice_resp.dart";
 import "package:backend_integration/endpoint/process_audio.dart";
@@ -16,9 +17,9 @@ class VoiceProcessRepository {
 
   VoiceProcessRepository(this.ttv, this.pa);
 
-  String processVoice(File file, String lang) {
-    pa.getContextFromAudio("foo", lang, file);
-    return "What's my bank balance";
+  Future<ContextFromAudioResp> processVoice(File file, String lang) async {
+    ContextFromAudioResp resp = await pa.getContextFromAudio("foo", lang, file);
+    return resp;
   }
 
   String performAction() {
