@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import '../dto/context_from_audio_resp.dart';
-import '../dto/metadata.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'process_audio.g.dart';
 
-@RestApi(baseUrl: "http://192.168.0.104:8080/")
+@RestApi()
 abstract class ProcessAudioAPI {
   factory ProcessAudioAPI(Dio dio) = _ProcessAudioAPI;
 

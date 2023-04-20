@@ -23,12 +23,11 @@ class DioClient {
 
   DioClient._internal() {
     _dio = Dio(
-      // BaseOptions(
-      //   baseUrl: baseURL,
+      BaseOptions(
+        baseUrl: baseURL,
       //   connectTimeout: ct,
       //   receiveTimeout: rt,
-      //   responseType: ResponseType.json,
-      // ),
+      ),
     );
     _dio.interceptors.add(DioInterceptor());
   }

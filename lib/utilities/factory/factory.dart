@@ -23,7 +23,7 @@ LoginCubit get loginCubit => LoginCubit(loginUseCase);
 
 // UseCase
 
-LanguageChangeUsecase get languageChangeUsecase => LanguageChangeUsecase(languageChangeRepo);
+LanguageChangeUseCase get languageChangeUsecase => LanguageChangeUseCase(languageChangeRepo);
 VoiceProcessUserCase get voiceProcessUserCase => VoiceProcessUserCase(voiceProcessRepository, languageChangeRepo);
 LoginUsecase get loginUseCase => LoginUsecase();
 

@@ -4,7 +4,8 @@ import "package:alpha/widgets/mic_button.dart";
 import "package:alpha/widgets/text_widget.dart";
 import "package:alpha/widgets/verify_pin_popup.dart";
 import "package:auto_route/auto_route.dart";
-import "package:flutter/material.dart";
+import "package:backend_integration/dto/metadata.dart";
+import "package:flutter/material.dart" hide MetaData;
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_sound/flutter_sound.dart";
 import "package:logger/logger.dart" show Level;
@@ -60,7 +61,7 @@ class _VoiceChatState extends State<VoiceChat> {
   }
 
   void playAudio(String text) {
-    context.read<VoiceChatCubit>().textToAudio(text);
+    context.read<VoiceChatCubit>().textToAudio(text, selectedLang);
   }
 
   final List<ChatMessage> _messages = [
@@ -74,7 +75,7 @@ class _VoiceChatState extends State<VoiceChat> {
     vc.startRecord();
   }
 
-  Future<void> signup() {
+  Future<void> verifyPin() {
     return showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -85,11 +86,13 @@ class _VoiceChatState extends State<VoiceChat> {
   void onStop() async {
     var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    String audioToText = await vcc.audioToText(file, selectedLang);
-    _messages.insert(0, ChatMessage(text: audioToText, isMe: false));
-    var result = vcc.performAction();
-    _messages.insert(0, ChatMessage(text: result, isMe: true));
-    vcc.textToAudio(result);
+    await verifyPin();
+    MetaData md = MetaData(
+      nickName: Constants.defaultNickName,
+    );
+    String audioToText = await vcc.processAudio(file, selectedLang, md);
+    _messages.insert(0, ChatMessage(text: audioToText, isMe: true));
+    vcc.textToAudio(audioToText, selectedLang);
     setState(() {});
   }
 

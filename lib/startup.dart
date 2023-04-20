@@ -6,7 +6,7 @@ import "voice_banking.dart";
 
 void startup() async{
   DioClient.init(
-    "https://asr.iitm.ac.in/",
+    "http://192.168.0.104:8080/",
     Duration(seconds: 10),
     Duration(seconds: 10),
   );

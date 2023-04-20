@@ -2,10 +2,10 @@ import "package:alpha/model/language.dart";
 
 import "../repository/language_change_repo.dart";
 
-class LanguageChangeUsecase {
+class LanguageChangeUseCase {
   late LanguageChangeRepo repo;
 
-  LanguageChangeUsecase(this.repo);
+  LanguageChangeUseCase(this.repo);
 
   Future<void> languageChange(Language language) async {
     await repo.languageChange(language);

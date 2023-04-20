@@ -44,7 +44,7 @@ class _$Routes extends RootStackRouter {
           orElse: () => const SignupPageRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: SignupPage(key: args.key),
+        child: WrappedRoute(child: SignupPage(key: args.key)),
       );
     },
   };

@@ -8,7 +8,6 @@ import "package:auto_route/auto_route.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:otp_text_field/otp_text_field.dart";
-import "signup.dart";
 import "../common/constants.dart";
 import "../cubit/login_cubit.dart";
 import "../navigation/routes.dart";
@@ -92,7 +91,9 @@ class _LoginState extends State<Login> {
                       ),
                       VBPrimaryTextButton(
                         text: "Register User?",
-                        onPress: () {},
+                        onPress: () {
+                          AutoRouter.of(context).push(SignupPageRoute());
+                        },
                       ),
                     ],
                   ),

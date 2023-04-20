@@ -8,7 +8,7 @@ part "language_change_state.dart";
 class LanguageChangeCubit extends Cubit<LanguageChangeState> {
   LanguageChangeCubit(this.lcu): super(LanguageChangeInitial());
 
-  LanguageChangeUsecase lcu;
+  LanguageChangeUseCase lcu;
 
   Future<void> changeLanguage(Language language) async {
     await lcu.languageChange(language);

@@ -8,41 +8,35 @@ import "package:backend_integration/dto/text_to_voice_req.dart";
 import "package:backend_integration/dto/text_to_voice_resp.dart";
 import "package:backend_integration/endpoint/process_audio.dart";
 import "package:backend_integration/endpoint/text_to_voice.dart";
-import "package:storage/storage.dart";
 import "package:dio/dio.dart";
+
+import "../common/constants.dart";
 
 
 class VoiceProcessRepository {
   late TextToVoiceAPI ttv;
   late ProcessAudioAPI pa;
-  late Storage _localStorage;
 
   VoiceProcessRepository(this.ttv, this.pa);
 
-  Future<ContextFromAudioResp> processVoice(File file, String lang) async {
-    MetaData m = MetaData(nickName: "foo");
-    var convert = JsonUtf8Encoder().convert(m);
+  Future<ContextFromAudioResp> processVoice(File file, String lang, MetaData md) async {
+    var convert = JsonUtf8Encoder().convert(md);
     String e = base64Encode(convert);
-    ContextFromAudioResp resp = await pa.getContextFromAudio("foo", lang, e, file);
+    ContextFromAudioResp resp = await pa.getContextFromAudio(Constants.senderId, lang, e, file);
     return resp;
   }
 
-  String performAction() {
-    // Call endpoint to get result
-    return "Your bank balance is 5000";
-  }
-
-  Future<Uint8List> convertToVoice(String result) async {
+  Future<Uint8List> convertToVoice(String result, String lang) async {
     late TextToVoiceResp textToVoice;
     try {
       textToVoice = await ttv.textToVoice(
         TextToVoiceReq(
           input: result,
-          lang: "English",
-          gender: "male",
+          lang: lang,
+          gender: Constants.voiceGender,
         ),
       );
-    } on DioError catch (e) {
+    } on DioError catch (_) {
 
     }
     return textToVoice.audio;

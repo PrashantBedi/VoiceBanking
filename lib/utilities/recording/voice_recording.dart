@@ -1,9 +1,9 @@
 import "dart:io";
 
 import "package:flutter_sound/flutter_sound.dart";
-import "package:path_provider/path_provider.dart";
 import "package:permission_handler/permission_handler.dart";
-import "package:record_mp3/record_mp3.dart";
+
+import "../../common/constants.dart";
 
 class VoiceRecording {
   late FlutterSoundRecorder recorder;
@@ -13,14 +13,14 @@ class VoiceRecording {
   void initializer() async {
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
-      throw "Permission not granted";
+      throw Constants.permissionError;
     }
     await recorder.openRecorder();
     recorder.setSubscriptionDuration(const Duration(milliseconds: 500));
   }
 
   Future startRecord() async {
-    await recorder.startRecorder(toFile: "output.aac");
+    await recorder.startRecorder(toFile: Constants.recordedAudioFileName);
   }
 
   Future<File> stopRecorder() async {

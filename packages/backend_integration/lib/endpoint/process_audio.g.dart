@@ -12,9 +12,7 @@ class _ProcessAudioAPI implements ProcessAudioAPI {
   _ProcessAudioAPI(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'http://192.168.0.104:8080/';
-  }
+  });
 
   final Dio _dio;
 
