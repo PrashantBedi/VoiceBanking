@@ -51,7 +51,7 @@ class _SignupPageState extends State<SignupPage> {
     var nav = AutoRouter.of(context);
     if(_formKey.currentState!.validate()){
       await vc.startRecord();
-      await Future.delayed(Duration(milliseconds: 1500));
+      await Future.delayed(Duration(milliseconds: Constants.micRecordTimeInMilliSec));
       File file = await vc.stopRecorder();
       MetaData md = MetaData(
         fullName: fName.text,

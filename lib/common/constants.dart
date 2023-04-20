@@ -10,4 +10,5 @@ class Constants {
   static const String permissionError = "Permission not granted";
   static const String defaultLanguage = "english";
   static const String url = "http://192.168.0.104:8080/";
+  static const int micRecordTimeInMilliSec = 2500;
 }
