@@ -10,4 +10,6 @@ enum AppColor {
   labelText,
   backgroundLight,
   white,
+  error,
+  hintText,
 }

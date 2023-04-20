@@ -17,6 +17,8 @@ class AppColors {
   static const Color headlineTextLight = Colors.black87;
   static const Color labelTextLight = Colors.black12;
   static const Color backgroundLight = Colors.white;
+  static const Color errorLight = Colors.redAccent;
+  static const Color hintTextLight = Colors.black45;
 
   // Dark
 }

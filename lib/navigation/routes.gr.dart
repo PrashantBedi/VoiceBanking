@@ -39,6 +39,14 @@ class _$Routes extends RootStackRouter {
         child: WrappedRoute(child: const LanguageChange()),
       );
     },
+    SignupPageRoute.name: (routeData) {
+      final args = routeData.argsAs<SignupPageRouteArgs>(
+          orElse: () => const SignupPageRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: SignupPage(key: args.key),
+      );
+    },
   };
 
   @override
@@ -60,6 +68,10 @@ class _$Routes extends RootStackRouter {
         RouteConfig(
           LanguageChangeRoute.name,
           path: '/lang',
+        ),
+        RouteConfig(
+          SignupPageRoute.name,
+          path: '/register',
         ),
       ];
 }
@@ -122,4 +134,28 @@ class LanguageChangeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LanguageChangeRoute';
+}
+
+/// generated route for
+/// [SignupPage]
+class SignupPageRoute extends PageRouteInfo<SignupPageRouteArgs> {
+  SignupPageRoute({Key? key})
+      : super(
+          SignupPageRoute.name,
+          path: '/register',
+          args: SignupPageRouteArgs(key: key),
+        );
+
+  static const String name = 'SignupPageRoute';
+}
+
+class SignupPageRouteArgs {
+  const SignupPageRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignupPageRouteArgs{key: $key}';
+  }
 }

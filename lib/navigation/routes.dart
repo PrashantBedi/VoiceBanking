@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 
 import "../presentation/language_select.dart";
 import "../presentation/login.dart";
+import "../presentation/signup.dart";
 import "../presentation/voice_chat.dart";
 
 part "routes.gr.dart";
@@ -13,6 +14,7 @@ part "routes.gr.dart";
     AutoRoute(page: Login, path: "/login", initial: true),
     AutoRoute(page: VoiceChat, path: "/chat"),
     AutoRoute(page: LanguageChange, path: "/lang"),
+    AutoRoute(page: SignupPage, path: "/register"),
   ],
 )
 class Routes extends _$Routes {
