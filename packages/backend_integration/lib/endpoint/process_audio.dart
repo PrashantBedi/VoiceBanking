@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:backend_integration/dto/context_from_audio_resp.dart';
+import '../dto/context_from_audio_resp.dart';
+import '../dto/metadata.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -15,6 +16,7 @@ abstract class ProcessAudioAPI {
   Future<ContextFromAudioResp> getContextFromAudio(
       @Query("senderId") String senderId,
       @Query("sourceLang") String sourceLang,
+      @Query("metaData") String metadata,
       @Part() File file,
   );
 }

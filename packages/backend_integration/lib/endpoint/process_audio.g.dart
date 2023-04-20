@@ -24,12 +24,14 @@ class _ProcessAudioAPI implements ProcessAudioAPI {
   Future<ContextFromAudioResp> getContextFromAudio(
     senderId,
     sourceLang,
+    metadata,
     file,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'senderId': senderId,
       r'sourceLang': sourceLang,
+      r'metaData': metadata,
     };
     final _headers = <String, dynamic>{};
     final _data = FormData();

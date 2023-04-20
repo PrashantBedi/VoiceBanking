@@ -5,8 +5,8 @@ part 'context_from_audio_resp.g.dart';
 @JsonSerializable()
 class ContextFromAudioResp {
 
-  @JsonKey(name: "data")
-  late List<Map<String, String>> data;
+  @JsonKey(name: "result")
+  late Map<String, String> data;
 
   ContextFromAudioResp(this.data);
 
