@@ -5,10 +5,22 @@ import "../colors/app_color.dart";
 import "../colors/app_theme_context_extension.dart";
 import "otp_text_field_widget.dart";
 
-class VBSetMPinPopup extends StatelessWidget {
+class VBSetMPinPopup extends StatefulWidget {
   const VBSetMPinPopup({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<VBSetMPinPopup> createState() => _VBSetMPinPopupState();
+}
+
+class _VBSetMPinPopupState extends State<VBSetMPinPopup> {
+  String pin = "";
+  bool hasError = false;
+
+  void onChange(value) {
+    pin = value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +51,8 @@ class VBSetMPinPopup extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: VBOtpTextFieldWidget(
                     otpController: OtpFieldController(),
-                    hasError: false,
-                    onChange: (value) {},
+                    hasError: hasError,
+                    onChange: onChange,
                     isSecureInput: true,
                     otpLength: 6,
                   ),
@@ -49,8 +61,12 @@ class VBSetMPinPopup extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 50),
                   child: VBPrimaryElevatedButton.stretched(
                     onPress: () {
-                      Navigator.pop(context);
-
+                      if(pin.length == 6) {
+                        Navigator.pop(context);
+                      } else {
+                        hasError = true;
+                        setState(() {});
+                      }
                     },
                     child: Text(
                           "Verify",

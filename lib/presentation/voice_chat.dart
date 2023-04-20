@@ -78,7 +78,9 @@ class _VoiceChatState extends State<VoiceChat> {
   Future<void> verifyPin() {
     return showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       isDismissible: false,
+      enableDrag: true,
       builder: (context) => VBSetMPinPopup(),
     );
   }
