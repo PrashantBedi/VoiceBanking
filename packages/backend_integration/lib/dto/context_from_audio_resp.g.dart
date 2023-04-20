@@ -9,7 +9,7 @@ part of 'context_from_audio_resp.dart';
 ContextFromAudioResp _$ContextFromAudioRespFromJson(
         Map<String, dynamic> json) =>
     ContextFromAudioResp(
-      Map<String, String>.from(json['result'] as Map),
+      json['result'] as String,
     );
 
 Map<String, dynamic> _$ContextFromAudioRespToJson(

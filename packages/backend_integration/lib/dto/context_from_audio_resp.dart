@@ -6,7 +6,7 @@ part 'context_from_audio_resp.g.dart';
 class ContextFromAudioResp {
 
   @JsonKey(name: "result")
-  late Map<String, String> data;
+  late String data;
 
   ContextFromAudioResp(this.data);
 

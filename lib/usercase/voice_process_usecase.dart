@@ -17,7 +17,7 @@ class VoiceProcessUserCase{
 
   Future<String> processVoice(File file, String lang) async {
     ContextFromAudioResp resp = await repo.processVoice(file, lang);
-    return resp.data.toString();
+    return resp.data;
   }
 
   String performAction() {
