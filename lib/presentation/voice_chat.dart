@@ -19,7 +19,8 @@ import "../utilities/factory/factory.dart";
 import "../utilities/recording/voice_recording.dart";
 
 class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
-  VoiceChat({Key? key}) : super(key: key);
+  final String lang;
+  VoiceChat({Key? key, required this.lang}) : super(key: key);
 
   @override
   State<VoiceChat> createState() => _VoiceChatState();
@@ -35,7 +36,7 @@ class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
           create: (context) => languageChangeCubit,
         )
       ],
-      child: VoiceChat(),
+      child: VoiceChat(lang: lang,),
     );
   }
 }
@@ -43,16 +44,25 @@ class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
 class _VoiceChatState extends State<VoiceChat> {
   final recorder = FlutterSoundRecorder(logLevel: Level.error);
   late VoiceRecording vc;
-  String selectedLang = "english";
   final scrollController = ScrollController();
 
   @override
   void initState() {
-    vc = VoiceRecording(recorder);
-    vc.initializer();
-    playAudio(_messages.first.text);
     context.read<LanguageChangeCubit>().getLanguage();
+    vc = VoiceRecording(recorder);
+    initMessage();
+    vc.initializer();
     super.initState();
+  }
+
+  void initMessage() {
+    _messages = [
+      ChatMessage(
+        text: initText[widget.lang]!,
+        isMe: true,
+      ),
+    ];
+    playAudio(_messages.first.text);
   }
 
   @override
@@ -62,15 +72,10 @@ class _VoiceChatState extends State<VoiceChat> {
   }
 
   void playAudio(String text) {
-    context.read<VoiceChatCubit>().textToAudio(text, selectedLang);
+    context.read<VoiceChatCubit>().textToAudio(text, widget.lang);
   }
 
-  final List<ChatMessage> _messages = [
-    ChatMessage(
-      text: "Hi, How may I help you?",
-      isMe: true,
-    ),
-  ];
+  late List<ChatMessage> _messages;
 
   void onStart() {
     vc.startRecord();
@@ -93,10 +98,10 @@ class _VoiceChatState extends State<VoiceChat> {
     MetaData md = MetaData(
       nickName: Constants.defaultNickName,
     );
-    ProcessAudio processAudio = await vcc.processAudio(file, selectedLang, md);
+    ProcessAudio processAudio = await vcc.processAudio(file, widget.lang, md);
     _messages.insert(0, ChatMessage(text: processAudio.input, isMe: false));
     _messages.insert(0, ChatMessage(text: processAudio.output, isMe: true));
-    vcc.textToAudio(processAudio.output, selectedLang);
+    vcc.textToAudio(processAudio.output, widget.lang);
     setState(() {});
   }
 
@@ -139,13 +144,11 @@ class _VoiceChatState extends State<VoiceChat> {
                           Icon(Icons.menu),
                           Padding(
                             padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BlocBuilder<LanguageChangeCubit,
                                 LanguageChangeState>(
                               builder: (context, state) {
                                 if (state is LanguageChangeLoaded) {
-                                  selectedLang =
-                                      state.language.name.toLowerCase();
                                   return VBTextWidget.bodyMedium(
                                     state.language.name,
                                   );
@@ -159,7 +162,7 @@ class _VoiceChatState extends State<VoiceChat> {
                     ),
                     BlocBuilder<VoiceChatCubit, VoiceChatState>(
                       builder: (context, state) {
-                        if(state is VoiceChatStateLoading) {
+                        if (state is VoiceChatStateLoading) {
                           return CircularProgressIndicator();
                         }
                         return VBMicButton(
@@ -178,3 +181,8 @@ class _VoiceChatState extends State<VoiceChat> {
     );
   }
 }
+
+Map<String, String> initText = {
+  "hindi": "कहिए, मैं आपकी क्या सहायता कर सकता हूं?",
+  "tamil": "வணக்கம், நான் உங்களுக்கு எப்படி உதவ முடியும்?",
+};

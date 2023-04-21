@@ -25,6 +25,9 @@ class VoiceProcessUserCase{
     Uint8List audio = await repo.convertToVoice(result, lang);
     var directory = await getApplicationDocumentsDirectory();
     var file = File("${directory.path}/${Constants.receiveAudioFileName}");
+    if(file.existsSync()){
+      file.delete();
+    }
     file = await file.writeAsBytes(audio);
     PlayAudio().playAudio(file.path);
   }

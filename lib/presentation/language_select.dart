@@ -59,10 +59,15 @@ class _LanguageChangeState extends State<LanguageChange> {
                   if (state is LanguageChangeLoaded)
                     return VBLanguageList(
                       changeLanguage: (language) {
-                        context.read<LanguageChangeCubit>().changeLanguage(
-                            language);
+                        context
+                            .read<LanguageChangeCubit>()
+                            .changeLanguage(language);
                         AutoRouter.of(context).popUntilRoot();
-                        AutoRouter.of(context).push(VoiceChatRoute());
+                        AutoRouter.of(context).push(
+                          VoiceChatRoute(
+                            lang: language.name.toLowerCase(),
+                          ),
+                        );
                       },
                       language: state.language,
                     );

@@ -26,11 +26,14 @@ class _$Routes extends RootStackRouter {
       );
     },
     VoiceChatRoute.name: (routeData) {
-      final args = routeData.argsAs<VoiceChatRouteArgs>(
-          orElse: () => const VoiceChatRouteArgs());
+      final args = routeData.argsAs<VoiceChatRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: VoiceChat(key: args.key)),
+        child: WrappedRoute(
+            child: VoiceChat(
+          key: args.key,
+          lang: args.lang,
+        )),
       );
     },
     LanguageChangeRoute.name: (routeData) {
@@ -103,24 +106,34 @@ class LoginRouteArgs {
 /// generated route for
 /// [VoiceChat]
 class VoiceChatRoute extends PageRouteInfo<VoiceChatRouteArgs> {
-  VoiceChatRoute({Key? key})
-      : super(
+  VoiceChatRoute({
+    Key? key,
+    required String lang,
+  }) : super(
           VoiceChatRoute.name,
           path: '/chat',
-          args: VoiceChatRouteArgs(key: key),
+          args: VoiceChatRouteArgs(
+            key: key,
+            lang: lang,
+          ),
         );
 
   static const String name = 'VoiceChatRoute';
 }
 
 class VoiceChatRouteArgs {
-  const VoiceChatRouteArgs({this.key});
+  const VoiceChatRouteArgs({
+    this.key,
+    required this.lang,
+  });
 
   final Key? key;
 
+  final String lang;
+
   @override
   String toString() {
-    return 'VoiceChatRouteArgs{key: $key}';
+    return 'VoiceChatRouteArgs{key: $key, lang: $lang}';
   }
 }
 
