@@ -6,6 +6,7 @@ import "package:backend_integration/dto/metadata.dart";
 import "package:path_provider/path_provider.dart";
 
 import "../common/constants.dart";
+import "../model/process_audio.dart";
 import "../repository/language_change_repo.dart";
 import "../repository/voice_process_repo.dart";
 import "../utilities/play_audio/play_audio.dart";
@@ -16,9 +17,8 @@ class VoiceProcessUserCase{
 
   VoiceProcessUserCase(this.repo, this.langRepo);
 
-  Future<String> processVoice(File file, String lang, MetaData md) async {
-    ContextFromAudioResp resp = await repo.processVoice(file, lang, md);
-    return resp.data;
+  Future<ProcessAudio> processVoice(File file, String lang, MetaData md) async {
+    return await repo.processVoice(file, lang, md);
   }
 
   Future<void> convertToVoice(String result, String lang) async {

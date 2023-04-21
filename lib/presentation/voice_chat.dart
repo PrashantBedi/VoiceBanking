@@ -13,6 +13,7 @@ import "package:logger/logger.dart" show Level;
 import "../common/constants.dart";
 import "../cubit/language_change_cubit.dart";
 import "../cubit/voice_chat_cubit.dart";
+import "../model/process_audio.dart";
 import "../navigation/routes.dart";
 import "../utilities/factory/factory.dart";
 import "../utilities/recording/voice_recording.dart";
@@ -92,9 +93,10 @@ class _VoiceChatState extends State<VoiceChat> {
     MetaData md = MetaData(
       nickName: Constants.defaultNickName,
     );
-    String audioToText = await vcc.processAudio(file, selectedLang, md);
-    _messages.insert(0, ChatMessage(text: audioToText, isMe: true));
-    vcc.textToAudio(audioToText, selectedLang);
+    ProcessAudio processAudio = await vcc.processAudio(file, selectedLang, md);
+    _messages.insert(0, ChatMessage(text: processAudio.input, isMe: false));
+    _messages.insert(0, ChatMessage(text: processAudio.output, isMe: true));
+    vcc.textToAudio(processAudio.output, selectedLang);
     setState(() {});
   }
 

@@ -11,6 +11,7 @@ import "package:backend_integration/endpoint/text_to_voice.dart";
 import "package:dio/dio.dart";
 
 import "../common/constants.dart";
+import "../model/process_audio.dart";
 
 
 class VoiceProcessRepository {
@@ -19,11 +20,11 @@ class VoiceProcessRepository {
 
   VoiceProcessRepository(this.ttv, this.pa);
 
-  Future<ContextFromAudioResp> processVoice(File file, String lang, MetaData md) async {
+  Future<ProcessAudio> processVoice(File file, String lang, MetaData md) async {
     var convert = JsonUtf8Encoder().convert(md);
     String e = base64Encode(convert);
     ContextFromAudioResp resp = await pa.getContextFromAudio(Constants.senderId, lang, e, file);
-    return resp;
+    return ProcessAudio(resp.input, resp.output);
   }
 
   Future<Uint8List> convertToVoice(String result, String lang) async {

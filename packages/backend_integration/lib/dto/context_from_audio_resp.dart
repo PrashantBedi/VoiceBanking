@@ -6,9 +6,12 @@ part 'context_from_audio_resp.g.dart';
 class ContextFromAudioResp {
 
   @JsonKey(name: "result")
-  late String data;
+  late String output;
 
-  ContextFromAudioResp(this.data);
+  @JsonKey(name: "input")
+  late String input;
+
+  ContextFromAudioResp(this.output, this.input);
 
   factory ContextFromAudioResp.fromJson(Map<String, dynamic> json) =>
       _$ContextFromAudioRespFromJson(json);

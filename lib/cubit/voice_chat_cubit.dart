@@ -3,6 +3,7 @@ import "dart:io";
 import "package:backend_integration/dto/metadata.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 
+import "../model/process_audio.dart";
 import "../usercase/voice_process_usecase.dart";
 
 part "voice_chat_state.dart";
@@ -12,7 +13,7 @@ class VoiceChatCubit extends Cubit<VoiceChatState> {
 
   VoiceChatCubit(this.vpu): super(VoiceChatStateInitial());
 
-  Future<String> processAudio(File file, String lang, MetaData md) async {
+  Future<ProcessAudio> processAudio(File file, String lang, MetaData md) async {
     return await vpu.processVoice(file, lang, md);
   }
 
