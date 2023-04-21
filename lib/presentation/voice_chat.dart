@@ -158,7 +158,7 @@ class _VoiceChatState extends State<VoiceChat> {
                     VBMicButton(
                       onRecord: onStart,
                       onStop: onStop,
-                    )
+                    ),
                   ],
                 ),
               ),

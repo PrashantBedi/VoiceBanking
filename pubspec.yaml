@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_sound: ^9.2.13
-  record_mp3: ^3.0.0
   permission_handler: ^9.2.0
   assets_audio_player: ^3.0.6
   flutter_bloc: ^8.1.1
