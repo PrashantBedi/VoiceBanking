@@ -1,5 +1,5 @@
 class Constants {
-  static const String title = "Voice Banking";
+  static const String title = "Voxie";
   static const String language = "language";
   static const String boxName = "voice_banking";
   static const String senderId = "flutter-ui";

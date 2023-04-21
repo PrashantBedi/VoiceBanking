@@ -9,6 +9,7 @@ class Language {
     return <Language>[
       Language("Hindi", "hi", "IN"),
       Language("Tamil", "ta", "IN"),
+      Language("Telugu", "te", "IN"),
     ];
   }
 }

@@ -38,6 +38,7 @@ class AppThemeWrapper {
       AppColor.white: AppColors.white,
       AppColor.hintText: AppColors.hintTextLight,
       AppColor.error: AppColors.errorLight,
+      AppColor.primaryText: AppColors.primaryText,
     },
   };
 }

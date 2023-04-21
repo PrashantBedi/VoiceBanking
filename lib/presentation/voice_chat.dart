@@ -185,4 +185,5 @@ class _VoiceChatState extends State<VoiceChat> {
 Map<String, String> initText = {
   "hindi": "कहिए, मैं आपकी क्या सहायता कर सकता हूं?",
   "tamil": "வணக்கம், நான் உங்களுக்கு எப்படி உதவ முடியும்?",
+  "telugu": "హాయ్, నేను మీకు ఎలా సహాయం చేయగలను",
 };

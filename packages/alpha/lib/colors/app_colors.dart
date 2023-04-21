@@ -5,9 +5,10 @@ class AppColors {
 
   // Common
   static const Color transparent = Colors.transparent;
-  static const Color primary = Colors.blue;
+  static const Color primary = Color.fromARGB(255, 225, 178, 95);
+  static const Color primaryText = Color.fromARGB(255, 210, 149, 45);
   static const Color white = Colors.white;
-  static const Color textChatBox = Color.fromARGB(255, 128, 216, 255);
+  static const Color textChatBox = Color.fromARGB(255, 231, 163, 64);
 
   // Light
   static const Color iconLight = Colors.white;

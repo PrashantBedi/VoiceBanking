@@ -2,6 +2,7 @@ enum AppColor {
   transparent,
   icon,
   primary,
+  primaryText,
   textChatBox,
   border,
   widgetBg,

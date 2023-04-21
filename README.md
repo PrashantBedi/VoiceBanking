@@ -2,15 +2,37 @@
 
 A new Flutter project.
 
-## Getting Started
+## Pre-requisites
 
-This project is a starting point for a Flutter application.
+1. Flutter
+2. Android Studio
+3. Install melos 
+   1. flutter pub global activate melos 2.9.0
 
-A few resources to get you started if this is your first Flutter project:
+## Setup
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. cd VoiceBanking 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Installing dependencies
+```sh
+    make bootstrap 
+```
+   
+3. Run android emulator using android studio
+   
+4. Get emulator prefix by running
+```sh
+  make list-devices
+```
+   
+6. Run app using
+```sh
+  make app/<<Android emulator prefix>>
+```
+
+8. Configure you backend ip on android app.
+   1. Click on Configure IP on Login page
+   2. Enter your IP
+   3. Click Configure
+
+

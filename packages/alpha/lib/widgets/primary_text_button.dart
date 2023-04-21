@@ -16,7 +16,7 @@ class VBPrimaryTextButton extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.labelSmall!.copyWith(
-              color: context.getColor(AppColor.primary),
+              color: context.getColor(AppColor.primaryText),
               letterSpacing: 0,
               fontSize: 20,
               fontWeight: FontWeight.w600,

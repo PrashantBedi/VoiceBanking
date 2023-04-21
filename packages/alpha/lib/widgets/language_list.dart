@@ -46,7 +46,7 @@ class _VBLanguageListState extends State<VBLanguageList> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    VBTextWidget.bodyMedium(
+                    VBTextWidget.bodySmall(
                       languageList
                           .elementAt(index)
                           .name,
