@@ -47,11 +47,9 @@ class _VBLanguageListState extends State<VBLanguageList> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     VBTextWidget.bodyMedium(
-                      "${languageList
+                      languageList
                           .elementAt(index)
-                          .name}(${languageList
-                          .elementAt(index)
-                          .languageCode})",
+                          .name,
                     ),
                     index == _selectedIndex
                         ? const Icon(Icons.check,)
