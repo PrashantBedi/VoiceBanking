@@ -139,7 +139,7 @@ class _VoiceChatState extends State<VoiceChat> {
                           Icon(Icons.menu),
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BlocBuilder<LanguageChangeCubit,
                                 LanguageChangeState>(
                               builder: (context, state) {
@@ -157,9 +157,16 @@ class _VoiceChatState extends State<VoiceChat> {
                         ],
                       ),
                     ),
-                    VBMicButton(
-                      onRecord: onStart,
-                      onStop: onStop,
+                    BlocBuilder<VoiceChatCubit, VoiceChatState>(
+                      builder: (context, state) {
+                        if(state is VoiceChatStateLoading) {
+                          return CircularProgressIndicator();
+                        }
+                        return VBMicButton(
+                          onRecord: onStart,
+                          onStop: onStop,
+                        );
+                      },
                     ),
                   ],
                 ),

@@ -14,7 +14,10 @@ class VoiceChatCubit extends Cubit<VoiceChatState> {
   VoiceChatCubit(this.vpu): super(VoiceChatStateInitial());
 
   Future<ProcessAudio> processAudio(File file, String lang, MetaData md) async {
-    return await vpu.processVoice(file, lang, md);
+    emit(VoiceChatStateLoading());
+    var processAudio = await vpu.processVoice(file, lang, md);
+    emit(VoiceChatStateLoaded());
+    return processAudio;
   }
 
   Future<void> textToAudio(String result, String lang) async{
