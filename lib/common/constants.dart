@@ -3,7 +3,7 @@ class Constants {
   static const String language = "language";
   static const String boxName = "voice_banking";
   static const String senderId = "flutter-ui";
-  static const String defaultNickName = "sandeep";
+  static const String defaultNickName = "ram";
   static const String voiceGender = "male";
   static const String receiveAudioFileName = "tts.wav";
   static const String recordedAudioFileName = "output.aac";
