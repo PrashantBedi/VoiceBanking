@@ -20,10 +20,22 @@ class VoiceProcessRepository {
   VoiceProcessRepository(this.ttv, this.pa);
 
   Future<ProcessAudio> processVoice(File file, String lang, MetaData md) async {
-    var convert = JsonUtf8Encoder().convert(md);
+    var convert = JsonUtf8Encoder().convert(md.toJson());
     String e = base64Encode(convert);
     ContextFromAudioResp resp =
         await pa.getContextFromAudio(Constants.senderId, lang, e, file);
+    return ProcessAudio(
+      input: resp.input,
+      output: resp.output,
+      action: resp.action,
+    );
+  }
+
+  Future<ProcessAudio> registerUser(String lang, MetaData md) async {
+    var convert = JsonUtf8Encoder().convert(md);
+    String e = base64Encode(convert);
+    ContextFromAudioResp resp =
+        await pa.getContextFromAudio(Constants.senderId, lang, e);
     return ProcessAudio(
       input: resp.input,
       output: resp.output,

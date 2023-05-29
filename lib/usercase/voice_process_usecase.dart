@@ -31,4 +31,8 @@ class VoiceProcessUserCase{
     file = await file.writeAsBytes(audio);
     PlayAudio().playAudio(file.path);
   }
+
+  Future<ProcessAudio> withoutAudio(String lang, MetaData md) {
+    return repo.registerUser(lang, md);
+  }
 }

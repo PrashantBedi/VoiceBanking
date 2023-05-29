@@ -2,6 +2,7 @@ enum ActionEnum {
   userInfo,
   balance,
   history,
+  historyWithDuration,
   registerUser,
   removeUser,
   transferMoney,
@@ -23,6 +24,8 @@ class Action {
         return ActionEnum.removeUser;
       case "transfer_money":
         return ActionEnum.transferMoney;
+      case "transaction_period":
+        return ActionEnum.historyWithDuration;
       default:
         return ActionEnum.unknown;
     }

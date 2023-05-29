@@ -13,13 +13,16 @@ MetaData _$MetaDataFromJson(Map<String, dynamic> json) => MetaData(
       mobNumber: json['mob_number'] as String?,
       pinNumber: json['pin_number'] as String?,
       userName: json['user_name'] as String?,
-    );
+      duration: json['date_filter'] as String?,
+    )..action = json['action'] as String?;
 
 Map<String, dynamic> _$MetaDataToJson(MetaData instance) => <String, dynamic>{
+      'action': instance.action,
       'nick_name': instance.nickName,
       'full_name': instance.fullName,
       'upi_id': instance.upiID,
       'mob_number': instance.mobNumber,
       'pin_number': instance.pinNumber,
       'user_name': instance.userName,
+      'date_filter': instance.duration,
     };

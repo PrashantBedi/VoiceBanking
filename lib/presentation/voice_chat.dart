@@ -1,4 +1,5 @@
 import "package:alpha/widgets/chat_message.dart";
+import "package:alpha/widgets/primary_elevated_button.dart";
 import "package:alpha/widgets/rounded_elevated_container.dart";
 import "package:alpha/widgets/mic_button.dart";
 import "package:alpha/widgets/text_widget.dart";
@@ -8,15 +9,17 @@ import "package:backend_integration/dto/metadata.dart";
 import "package:flutter/material.dart" hide MetaData;
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_sound/flutter_sound.dart";
+import "package:intl/intl.dart";
 import "package:logger/logger.dart" show Level;
+import "package:syncfusion_flutter_datepicker/datepicker.dart";
 
 import "../common/constants.dart";
 import "../cubit/language_change_cubit.dart";
 import "../cubit/voice_chat_cubit.dart";
-import "../model/process_audio.dart";
 import "../navigation/routes.dart";
 import "../utilities/factory/factory.dart";
 import "../utilities/recording/voice_recording.dart";
+import "signup.dart";
 
 class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
   final String lang;
@@ -47,6 +50,27 @@ class _VoiceChatState extends State<VoiceChat> {
   final recorder = FlutterSoundRecorder(logLevel: Level.error);
   late VoiceRecording vc;
   final scrollController = ScrollController();
+
+  Future<void> transactionHistory() async {
+    final picked = await showDateRangePicker(
+        context: context,
+        lastDate: DateTime.now(),
+        firstDate: new DateTime(2000),
+        saveText: "Continue");
+    if (picked != null && picked != null) {
+      var startDate = DateFormat("yyyy-MM-dd:00-00").format(picked.start);
+      var endDate = DateFormat("yyyy-MM-dd:00-00").format(picked.end);
+      var range = "${startDate},${endDate}";
+      MetaData md = MetaData.withAction(
+        action: Constants.durationAction,
+        nickName: Constants.defaultNickName,
+        duration: range,
+      );
+
+      // ignore: use_build_context_synchronously
+      context.read<VoiceChatCubit>().historyWithDate(widget.lang, md);
+    }
+  }
 
   @override
   void initState() {
@@ -86,19 +110,16 @@ class _VoiceChatState extends State<VoiceChat> {
   Future<void> verifyPin() {
     return showModalBottomSheet(
       context: context,
-      isScrollControlled: false,
+      isScrollControlled: true,
       isDismissible: false,
-      enableDrag: false,
-      builder: (context) => VBSetMPinPopup(
-        // verifyPin: (pin) => context.read<VoiceChatCubit>().verifyPin(pin),
-      ),
+      enableDrag: true,
+      builder: (context) => VBSetMPinPopup(),
     );
   }
 
   void onStop() async {
     var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    // await verifyPin();
     MetaData md = MetaData(
       nickName: Constants.defaultNickName,
     );
@@ -110,32 +131,55 @@ class _VoiceChatState extends State<VoiceChat> {
     return BlocListener<VoiceChatCubit, VoiceChatState>(
       listener: (context, state) async {
         var vcc = context.read<VoiceChatCubit>();
+        var autoRouter = AutoRouter.of(context);
         if (state is VoiceChatStatePinAuth) {
           await verifyPin();
+          addMessage(state, vcc);
+        }
 
+        if (state is VoiceChatStateRegisterUser) {
           _messages.insert(
             0,
             ChatMessage(text: state.processAudio.input, isMe: false),
           );
+          // ignore: use_build_context_synchronously
+          showDialog(
+            context: context,
+            builder: (context) => BlocProvider(
+              create: (context) => voiceChatCubit,
+              child: SignupPage(),
+            ),
+          ).then(
+            (value) => {
+              setState(() {
+                _messages.insert(
+                  0,
+                  ChatMessage(text: value as String, isMe: true),
+                );
+              }),
+            },
+          );
+        }
+
+        if(state is TransactionHistory) {
           _messages.insert(
+            0,
+            ChatMessage(text: state.processAudio.input, isMe: false),
+          );
+          transactionHistory();
+        }
+
+        if(state is TransactionHistoryLoaded) {
+          setState(() {
+            _messages.insert(
             0,
             ChatMessage(text: state.processAudio.output, isMe: true),
           );
-          vcc.textToAudio(state.processAudio.output, widget.lang);
-          setState(() {});
+          });
         }
 
         if (state is VoiceChatStatePinValid || state is VoiceChatStateLoaded) {
-          _messages.insert(
-            0,
-            ChatMessage(text: state.processAudio.input, isMe: false),
-          );
-          _messages.insert(
-            0,
-            ChatMessage(text: state.processAudio.output, isMe: true),
-          );
-          vcc.textToAudio(state.processAudio.output, widget.lang);
-          setState(() {});
+          addMessage(state, vcc);
         }
       },
       child: Scaffold(
@@ -153,7 +197,7 @@ class _VoiceChatState extends State<VoiceChat> {
                 reverse: true,
                 itemCount: _messages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return _messages[index];
+                  return _messages[index].text == "" ? SizedBox.shrink() : _messages[index];
                 },
               ),
             ),
@@ -211,6 +255,19 @@ class _VoiceChatState extends State<VoiceChat> {
         ),
       ),
     );
+  }
+
+  void addMessage(VoiceChatState state, VoiceChatCubit vcc) {
+    _messages.insert(
+      0,
+      ChatMessage(text: state.processAudio.input, isMe: false),
+    );
+    _messages.insert(
+      0,
+      ChatMessage(text: state.processAudio.output, isMe: true),
+    );
+    vcc.textToAudio(state.processAudio.output, widget.lang);
+    setState(() {});
   }
 }
 

@@ -18,6 +18,22 @@ class VoiceChatStateLoaded extends VoiceChatState{
   VoiceChatStateLoaded(super.processAudio);
 }
 
+class VoiceChatStateRegisterUser extends VoiceChatState{
+  VoiceChatStateRegisterUser(super.processAudio);
+}
+
+class TransactionHistory extends VoiceChatState{
+  TransactionHistory(super.processAudio);
+}
+
+class TransactionHistoryLoaded extends VoiceChatState{
+  TransactionHistoryLoaded(super.processAudio);
+}
+
+class VoiceChatUserRegisteredSuccess extends VoiceChatState{
+  VoiceChatUserRegisteredSuccess(super.processAudio);
+}
+
 class VoiceChatStatePinAuth extends VoiceChatState{
   VoiceChatStatePinAuth(super.processAudio);
 }

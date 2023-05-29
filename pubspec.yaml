@@ -21,6 +21,8 @@ dependencies:
   backend_integration: 0.0.1
   network: 0.0.1
   storage: 0.0.1
+  syncfusion_flutter_datepicker: 20.4.42
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

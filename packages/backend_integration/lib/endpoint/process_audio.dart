@@ -13,9 +13,9 @@ abstract class ProcessAudioAPI {
   @POST("v1/context/audio")
   @MultiPart()
   Future<ContextFromAudioResp> getContextFromAudio(
-      @Query("senderId") String senderId,
-      @Query("sourceLang") String sourceLang,
-      @Query("metaData") String metadata,
-      @Part() File file,
-  );
+    @Query("senderId") String senderId,
+    @Query("sourceLang") String sourceLang,
+    @Query("metaData") String metadata, [
+    @Part() File? file,
+  ]);
 }

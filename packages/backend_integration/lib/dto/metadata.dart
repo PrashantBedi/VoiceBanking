@@ -4,6 +4,9 @@ part "metadata.g.dart";
 
 @JsonSerializable()
 class MetaData {
+  @JsonKey(name: "action")
+  late String? action;
+
   @JsonKey(name: "nick_name")
   late String? nickName;
 
@@ -22,6 +25,9 @@ class MetaData {
   @JsonKey(name: "user_name")
   late String? userName;
 
+  @JsonKey(name: "date_filter")
+  late String? duration;
+
   MetaData({
     this.nickName,
     this.fullName,
@@ -29,6 +35,20 @@ class MetaData {
     this.mobNumber,
     this.pinNumber,
     this.userName,
+    this.duration,
+  }){
+    action = "";
+  }
+
+  MetaData.withAction({
+    required this.action,
+    this.nickName,
+    this.fullName,
+    this.upiID,
+    this.mobNumber,
+    this.pinNumber,
+    this.userName,
+    this.duration,
   });
 
   factory MetaData.fromJson(Map<String, dynamic> json) =>

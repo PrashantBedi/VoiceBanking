@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                           VBPrimaryTextButton(
                             text: "Register User?",
                             onPress: () {
-                              AutoRouter.of(context).push(SignupPageRoute());
+                              AutoRouter.of(context).push(SignupPageRoute()).then((_) {});
                             },
                           ),
                           VBPrimaryTextButton(

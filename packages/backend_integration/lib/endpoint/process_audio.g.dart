@@ -22,24 +22,27 @@ class _ProcessAudioAPI implements ProcessAudioAPI {
   Future<ContextFromAudioResp> getContextFromAudio(
     senderId,
     sourceLang,
-    metadata,
+    metadata, [
     file,
-  ) async {
+  ]) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'senderId': senderId,
       r'sourceLang': sourceLang,
       r'metaData': metadata,
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
-    _data.files.add(MapEntry(
-      'file',
-      MultipartFile.fromFileSync(
-        file.path,
-        filename: file.path.split(Platform.pathSeparator).last,
-      ),
-    ));
+    if (file != null) {
+      _data.files.add(MapEntry(
+        'file',
+        MultipartFile.fromFileSync(
+          file.path,
+          filename: file.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ContextFromAudioResp>(Options(
       method: 'POST',
@@ -54,7 +57,6 @@ class _ProcessAudioAPI implements ProcessAudioAPI {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    print(_result.data);
     final value = ContextFromAudioResp.fromJson(_result.data!);
     return value;
   }

@@ -6,10 +6,9 @@ class VBPrimaryElevatedButton extends StatelessWidget {
   late final VoidCallback? onPress;
   late final Widget child;
   late final FlexFit _flexFit;
-  late final ValueKey<String>? key;
 
   VBPrimaryElevatedButton.stretched({
-    this.key,
+    super.key,
     this.onPress,
     required this.child,
   }) {
@@ -17,7 +16,7 @@ class VBPrimaryElevatedButton extends StatelessWidget {
   }
 
   VBPrimaryElevatedButton.fit({
-    this.key,
+    super.key,
     this.onPress,
     required this.child,
   }) {

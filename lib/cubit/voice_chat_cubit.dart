@@ -18,11 +18,31 @@ class VoiceChatCubit extends Cubit<VoiceChatState> {
     emit(VoiceChatStateLoading(ProcessAudio()));
     var processAudio = await vpu.processVoice(file, lang, md);
     var actionEnum = Action().getActionEnum(processAudio.action);
+
     if(AuthActionEnum.contains(actionEnum)) {
       emit(VoiceChatStatePinAuth(processAudio));
+    } else if (actionEnum == ActionEnum.registerUser) {
+      emit(VoiceChatStateRegisterUser(processAudio));
+    } else if (actionEnum == ActionEnum.history) {
+      emit(TransactionHistory(processAudio));
     } else {
       emit(VoiceChatStateLoaded(processAudio));
     }
+  }
+
+  Future<void> registerUser(String lang, MetaData md) async {
+    emit(VoiceChatStateLoading(ProcessAudio()));
+    var processAudio = await vpu.withoutAudio(lang, md);
+    var actionEnum = Action().getActionEnum(processAudio.action);
+
+    emit(VoiceChatUserRegisteredSuccess(processAudio));
+  }
+
+  Future<void> historyWithDate(String lang, MetaData md) async {
+    emit(VoiceChatStateLoading(ProcessAudio()));
+    var processAudio = await vpu.withoutAudio(lang, md);
+
+    emit(TransactionHistoryLoaded(processAudio));
   }
 
   Future<void> textToAudio(String result, String lang) async{
