@@ -54,6 +54,7 @@ class _ProcessAudioAPI implements ProcessAudioAPI {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    print(_result.data);
     final value = ContextFromAudioResp.fromJson(_result.data!);
     return value;
   }

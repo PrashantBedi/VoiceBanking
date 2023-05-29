@@ -25,8 +25,8 @@ class DioClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseURL,
-      //   connectTimeout: ct,
-      //   receiveTimeout: rt,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
       ),
     );
     _dio.interceptors.add(DioInterceptor());

@@ -6,8 +6,9 @@ import "../colors/app_theme_context_extension.dart";
 import "otp_text_field_widget.dart";
 
 class VBSetMPinPopup extends StatefulWidget {
+  final Function(String pin)? verifyPin;
   const VBSetMPinPopup({
-    Key? key,
+    Key? key, this.verifyPin,
   }) : super(key: key);
 
   @override
@@ -62,6 +63,9 @@ class _VBSetMPinPopupState extends State<VBSetMPinPopup> {
                   child: VBPrimaryElevatedButton.stretched(
                     onPress: () {
                       if(pin.length == 6) {
+                        if (widget.verifyPin != null) {
+                          widget.verifyPin!(pin);
+                        }
                         Navigator.pop(context);
                       } else {
                         hasError = true;

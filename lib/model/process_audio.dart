@@ -1,6 +1,11 @@
 class ProcessAudio {
-  late String input;
-  late String output;
+  final String input;
+  final String output;
+  final String action;
 
-  ProcessAudio(this.input, this.output);
+  const ProcessAudio({this.input="", this.output="", this.action=""});
+
+  bool isEmpty() {
+    return this.input == "" && this.action == "" && this.output == "";
+  }
 }

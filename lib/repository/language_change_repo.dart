@@ -15,4 +15,8 @@ class LanguageChangeRepo {
   Future<String?> getLanguage() async{
     return await _localStorage.getItem(key: Constants.language);
   }
+
+  Future<void> clearLanguage() async{
+    return _localStorage.deleteItem(key: Constants.language);
+  }
 }

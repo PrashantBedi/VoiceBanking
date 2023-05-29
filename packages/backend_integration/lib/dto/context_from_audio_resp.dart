@@ -11,7 +11,10 @@ class ContextFromAudioResp {
   @JsonKey(name: "input")
   late String input;
 
-  ContextFromAudioResp(this.output, this.input);
+  @JsonKey(name: "context")
+  late String action;
+
+  ContextFromAudioResp(this.output, this.input, this.action);
 
   factory ContextFromAudioResp.fromJson(Map<String, dynamic> json) =>
       _$ContextFromAudioRespFromJson(json);

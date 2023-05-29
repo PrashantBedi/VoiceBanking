@@ -11,6 +11,7 @@ ContextFromAudioResp _$ContextFromAudioRespFromJson(
     ContextFromAudioResp(
       json['result'] as String,
       json['input'] as String,
+      json['context'] as String,
     );
 
 Map<String, dynamic> _$ContextFromAudioRespToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ContextFromAudioRespToJson(
     <String, dynamic>{
       'result': instance.output,
       'input': instance.input,
+      'context': instance.action,
     };

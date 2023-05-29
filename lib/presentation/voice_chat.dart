@@ -36,7 +36,9 @@ class VoiceChat extends StatefulWidget implements AutoRouteWrapper {
           create: (context) => languageChangeCubit,
         )
       ],
-      child: VoiceChat(lang: lang,),
+      child: VoiceChat(
+        lang: lang,
+      ),
     );
   }
 }
@@ -84,99 +86,129 @@ class _VoiceChatState extends State<VoiceChat> {
   Future<void> verifyPin() {
     return showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: false,
       isDismissible: false,
-      enableDrag: true,
-      builder: (context) => VBSetMPinPopup(),
+      enableDrag: false,
+      builder: (context) => VBSetMPinPopup(
+        // verifyPin: (pin) => context.read<VoiceChatCubit>().verifyPin(pin),
+      ),
     );
   }
 
   void onStop() async {
     var vcc = context.read<VoiceChatCubit>();
     var file = await vc.stopRecorder();
-    await verifyPin();
+    // await verifyPin();
     MetaData md = MetaData(
       nickName: Constants.defaultNickName,
     );
-    ProcessAudio processAudio = await vcc.processAudio(file, widget.lang, md);
-    _messages.insert(0, ChatMessage(text: processAudio.input, isMe: false));
-    _messages.insert(0, ChatMessage(text: processAudio.output, isMe: true));
-    vcc.textToAudio(processAudio.output, widget.lang);
-    setState(() {});
+    vcc.processAudio(file, widget.lang, md);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          Constants.title,
-        ),
-        automaticallyImplyLeading: false,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(8.0),
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _messages[index];
-              },
-            ),
+    return BlocListener<VoiceChatCubit, VoiceChatState>(
+      listener: (context, state) async {
+        var vcc = context.read<VoiceChatCubit>();
+        if (state is VoiceChatStatePinAuth) {
+          await verifyPin();
+
+          _messages.insert(
+            0,
+            ChatMessage(text: state.processAudio.input, isMe: false),
+          );
+          _messages.insert(
+            0,
+            ChatMessage(text: state.processAudio.output, isMe: true),
+          );
+          vcc.textToAudio(state.processAudio.output, widget.lang);
+          setState(() {});
+        }
+
+        if (state is VoiceChatStatePinValid || state is VoiceChatStateLoaded) {
+          _messages.insert(
+            0,
+            ChatMessage(text: state.processAudio.input, isMe: false),
+          );
+          _messages.insert(
+            0,
+            ChatMessage(text: state.processAudio.output, isMe: true),
+          );
+          vcc.textToAudio(state.processAudio.output, widget.lang);
+          setState(() {});
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            Constants.title,
           ),
-          Divider(height: 1.0),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: VBRoundedElevatedCard(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () =>
-                          AutoRouter.of(context).push(LanguageChangeRoute()),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.menu),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: BlocBuilder<LanguageChangeCubit,
-                                LanguageChangeState>(
-                              builder: (context, state) {
-                                if (state is LanguageChangeLoaded) {
-                                  return VBTextWidget.bodyMedium(
-                                    state.language.name,
-                                  );
-                                }
-                                return CircularProgressIndicator();
-                              },
+          automaticallyImplyLeading: false,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.all(8.0),
+                reverse: true,
+                itemCount: _messages.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _messages[index];
+                },
+              ),
+            ),
+            Divider(height: 1.0),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: VBRoundedElevatedCard(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () =>
+                            AutoRouter.of(context).push(LanguageChangeRoute()),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.menu),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: BlocBuilder<LanguageChangeCubit,
+                                  LanguageChangeState>(
+                                builder: (context, state) {
+                                  if (state is LanguageChangeLoaded) {
+                                    return VBTextWidget.bodyMedium(
+                                      state.language.name,
+                                    );
+                                  }
+                                  return CircularProgressIndicator();
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    BlocBuilder<VoiceChatCubit, VoiceChatState>(
-                      builder: (context, state) {
-                        if (state is VoiceChatStateLoading) {
-                          return CircularProgressIndicator();
-                        }
-                        return VBMicButton(
-                          onRecord: onStart,
-                          onStop: onStop,
-                        );
-                      },
-                    ),
-                  ],
+                      BlocBuilder<VoiceChatCubit, VoiceChatState>(
+                        builder: (context, state) {
+                          if (state is VoiceChatStateLoading) {
+                            return CircularProgressIndicator();
+                          }
+                          return VBMicButton(
+                            onRecord: onStart,
+                            onStop: onStop,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

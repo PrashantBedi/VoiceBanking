@@ -1,10 +1,7 @@
 import "dart:io";
 
-import "package:alpha/colors/app_color.dart";
-import "package:alpha/colors/app_theme_context_extension.dart";
 import "package:alpha/widgets/mic_button.dart";
 import "package:alpha/widgets/password_field_form.dart";
-import "package:alpha/widgets/primary_elevated_button.dart";
 import "package:alpha/widgets/text_field_form.dart";
 import "package:auto_route/auto_route.dart";
 import "package:backend_integration/dto/metadata.dart";
@@ -61,7 +58,7 @@ class _SignupPageState extends State<SignupPage> {
         upiID: upi.text,
         pinNumber: pin.text,
       );
-      await vcc.processAudio(file, Constants.defaultLanguage , md);
+      vcc.processAudio(file, Constants.defaultLanguage , md);
       nav.push(LoginRoute());
     }
   }

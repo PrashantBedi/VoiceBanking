@@ -13,7 +13,6 @@ import "package:dio/dio.dart";
 import "../common/constants.dart";
 import "../model/process_audio.dart";
 
-
 class VoiceProcessRepository {
   late TextToVoiceAPI ttv;
   late ProcessAudioAPI pa;
@@ -23,8 +22,13 @@ class VoiceProcessRepository {
   Future<ProcessAudio> processVoice(File file, String lang, MetaData md) async {
     var convert = JsonUtf8Encoder().convert(md);
     String e = base64Encode(convert);
-    ContextFromAudioResp resp = await pa.getContextFromAudio(Constants.senderId, lang, e, file);
-    return ProcessAudio(resp.input, resp.output);
+    ContextFromAudioResp resp =
+        await pa.getContextFromAudio(Constants.senderId, lang, e, file);
+    return ProcessAudio(
+      input: resp.input,
+      output: resp.output,
+      action: resp.action,
+    );
   }
 
   Future<Uint8List> convertToVoice(String result, String lang) async {
@@ -37,9 +41,7 @@ class VoiceProcessRepository {
           gender: Constants.voiceGender,
         ),
       );
-    } on DioError catch (_) {
-
-    }
+    } on DioError catch (_) {}
     return textToVoice.audio;
   }
 }
